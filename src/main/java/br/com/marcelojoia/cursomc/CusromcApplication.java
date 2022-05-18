@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.com.marcelojoia.cursomc.domain.Categoria;
 import br.com.marcelojoia.cursomc.domain.Cidade;
+import br.com.marcelojoia.cursomc.domain.Cliente;
+import br.com.marcelojoia.cursomc.domain.Endereco;
 import br.com.marcelojoia.cursomc.domain.Estado;
 import br.com.marcelojoia.cursomc.domain.Produto;
+import br.com.marcelojoia.cursomc.domain.enums.TipoCliente;
 import br.com.marcelojoia.cursomc.repositories.CategoriaRepository;
 import br.com.marcelojoia.cursomc.repositories.CidadeRepository;
+import br.com.marcelojoia.cursomc.repositories.ClienteRepository;
+import br.com.marcelojoia.cursomc.repositories.EnderecoRepository;
 import br.com.marcelojoia.cursomc.repositories.EstadoRepository;
 import br.com.marcelojoia.cursomc.repositories.ProdutoRepository;
 
@@ -28,7 +33,13 @@ public class CusromcApplication implements CommandLineRunner {
 	private EstadoRepository estadoRepository;
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
 
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(CusromcApplication.class, args);
 	}
@@ -52,6 +63,7 @@ public class CusromcApplication implements CommandLineRunner {
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 
+		// States and Cities
 		Estado est1 = new Estado(null, "Minas Gerais");
 		Estado est2 = new Estado(null, "São Paulo");
 
@@ -64,5 +76,18 @@ public class CusromcApplication implements CommandLineRunner {
 
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
+		// Clients, address, telephone and cities 
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("27363323","93838393"));//Fazer o cliente saber os Telefones.
+
+		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cli1, c1);
+		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));//Fazer o cliente saber os seus endereços.
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+
 	}
 }
