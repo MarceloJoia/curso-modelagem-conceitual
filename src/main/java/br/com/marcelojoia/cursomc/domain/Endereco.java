@@ -29,7 +29,7 @@ public class Endereco implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
-
+	
 	//Como é uma assosiação direcionada, a cidade não conhece o endereço
 	@ManyToOne
 	@JoinColumn(name="cidade_id")
@@ -114,7 +114,7 @@ public class Endereco implements Serializable {
 	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
