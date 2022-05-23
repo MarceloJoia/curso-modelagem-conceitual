@@ -2,13 +2,18 @@ package br.com.marcelojoia.cursomc.domain;
 
 import java.util.Date;
 import javax.persistence.Entity;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import br.com.marcelojoia.cursomc.domain.enums.EstadoPagamento;
 
 @Entity
 public class PagamentoComBoleto extends Pagamento {
 	private static final long serialVersionUID = 1L;
 
+	@JsonFormat(pattern = "dd/mm/yyy")
 	private Date dataVencimento;
+	@JsonFormat(pattern = "dd/mm/yyy")
 	private Date dataPagamento;
 
 	public PagamentoComBoleto() {
